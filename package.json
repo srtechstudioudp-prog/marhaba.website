@@ -1,0 +1,11 @@
+{
+  "name": "marhaba-website",
+  "private": true,
+  "description": "Marhaba Heavy Equipment Trading LLC static website. Content in site/content, output in public/.",
+  "scripts": {
+    "build": "node site/build.mjs",
+    "images": "python -I tools/make_images.py",
+    "serve": "python -m http.server 8765 --directory public"
+  },
+  "engines": { "node": ">=18" }
+}

@@ -1,0 +1,24 @@
+{
+  "outputDirectory": "public",
+  "cleanUrls": false,
+  "trailingSlash": true,
+  "redirects": [
+    { "source": "/home.html", "destination": "/", "permanent": true },
+    { "source": "/index.html", "destination": "/", "permanent": true },
+    { "source": "/index-2.html", "destination": "/", "permanent": true },
+    { "source": "/about.html", "destination": "/about/", "permanent": true },
+    { "source": "/about-us", "destination": "/about/", "permanent": true },
+    { "source": "/products.html", "destination": "/products/", "permanent": true },
+    { "source": "/contact.html", "destination": "/contact/", "permanent": true },
+    { "source": "/contact-us", "destination": "/contact/", "permanent": true },
+    { "source": "/contactus", "destination": "/contact/", "permanent": true },
+    { "source": "/shop", "destination": "/products/", "permanent": true },
+    { "source": "/shop/category/cranes-2", "destination": "/cranes/", "permanent": true },
+    { "source": "/shop/category/heavy-equipment-3", "destination": "/heavy-equipment/", "permanent": true },
+    { "source": "/shop/category/mining-spares-1", "destination": "/spare-parts/", "permanent": true },
+    { "source": "/shop/category/locomotive-spares-4", "destination": "/spare-parts/", "permanent": true },
+    { "source": "/shop/category/eot-crane-components-5", "destination": "/spare-parts/", "permanent": true },
+    { "source": "/blog/:path*", "destination": "/guides/", "permanent": true },
+    { "source": "/sitemaps.xml", "destination": "/sitemap.xml", "permanent": true }
+  ]
+}
