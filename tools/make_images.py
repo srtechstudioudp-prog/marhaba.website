@@ -21,17 +21,34 @@ for name, f in HEROES.items():
     sm.save(os.path.join(OUT, f"{name}-800.jpg"), "JPEG", quality=76, optimize=True, progressive=True)
     print(name, im.size)
 
-# Favicon: bold amber "M" on navy rounded square (simplified for 16px legibility)
-NAVY, AMBER = (10, 27, 51, 255), (245, 166, 35, 255)
+# Logo and favicon from the client-supplied logo (_src/logo-client.png, transparent PNG)
+LOGO = os.path.join(ROOT, "_src", "logo-client.png")
+logo = Image.open(LOGO).convert("RGBA")
+alpha = logo.getchannel("A")
+full = logo.crop(alpha.point(lambda v: 255 if v > 8 else 0).getbbox())
+H = 96  # 2x of the 48px header display height
+fw = round(full.width * H / full.height)
+full.resize((fw, H), Image.LANCZOS).save(os.path.join(OUT, "logo.png"), optimize=True)
+print("logo", fw, H)
+
+# emblem = the circular mark at the left (columns before the first wide gap)
+cols = [alpha.crop((x, 0, x + 1, logo.height)).getbbox() is not None for x in range(logo.width)]
+start = next(i for i, c in enumerate(cols) if c)
+end = start
+while end < len(cols) and (cols[end] or any(cols[end:end + 12])):
+    end += 1
+emb = logo.crop((start, 0, end, logo.height))
+emb = emb.crop(emb.getchannel("A").point(lambda v: 255 if v > 8 else 0).getbbox())
+
 def mark(px):
     s = px * 4
     im = Image.new("RGBA", (s, s), (0, 0, 0, 0))
     d = ImageDraw.Draw(im)
-    d.rounded_rectangle((0, 0, s - 1, s - 1), radius=int(s * 0.22), fill=NAVY)
-    m = s * 0.2
-    t = s * 0.15  # stroke
-    x0, x1, y0, y1 = m, s - m, s * 0.22, s * 0.78
-    d.polygon([(x0, y1), (x0, y0), (x0 + t, y0), (s / 2, s * 0.56), (x1 - t, y0), (x1, y0), (x1, y1), (x1 - t, y1), (x1 - t, y0 + t * 1.6), (s / 2, s * 0.7), (x0 + t, y0 + t * 1.6), (x0 + t, y1)], fill=AMBER)
+    d.rounded_rectangle((0, 0, s - 1, s - 1), radius=int(s * 0.2), fill=(255, 255, 255, 255))
+    side = int(s * 0.84)
+    sc = side / max(emb.size)
+    e = emb.resize((round(emb.width * sc), round(emb.height * sc)), Image.LANCZOS)
+    im.alpha_composite(e, ((s - e.width) // 2, (s - e.height) // 2))
     return im.resize((px, px), Image.LANCZOS)
 
 for px in (48, 96, 144, 192, 512):

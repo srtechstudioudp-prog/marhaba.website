@@ -26,7 +26,7 @@
 
 ## Images and brand
 - Hero and category photos are the 4 slider images from the old site. They show Komatsu, Liebherr and Cat machines (manufacturer marketing photos). **Replace with the client's own machine photos**, or confirm the rights to use these.
-- The original logo is a 430x80 PNG with a "Hello !! World" tagline. The site uses a simplified "M" mark (navy and amber) and a text wordmark. Client to supply a vector logo, then update the header and favicon.
+- Logo: the header and footer use the client-supplied logo (1158x215 transparent PNG, saved as `_src/logo-client.png`, no "Hello !! World" tagline). The favicon is its circular emblem on a white square. A vector (SVG) logo would make it sharper on large screens.
 - Colours changed from the old red and blue to navy and safety amber. Confirm the client accepts.
 
 ## Technical

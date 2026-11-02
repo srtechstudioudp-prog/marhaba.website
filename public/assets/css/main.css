@@ -52,7 +52,7 @@ li{margin-bottom:.4em}
 .hdr{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.94);backdrop-filter:saturate(1.4) blur(10px);border-bottom:1px solid var(--line)}
 .hdr .wrap{display:flex;align-items:center;justify-content:space-between;height:74px;gap:18px}
 .brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--navy)}
-.brand img{width:46px;height:46px;border-radius:11px}
+.brand img{height:52px;width:auto;max-width:62vw}
 .brand b{display:block;font:700 1.55rem/1 var(--font-h);letter-spacing:.8px;text-transform:uppercase}
 .brand small{display:block;font:600 .66rem/1.2 var(--font-b);letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-top:3px}
 .nav{display:flex;align-items:center;gap:4px}
@@ -249,3 +249,5 @@ tbody th{font-weight:700;color:var(--ink)}
 .sec.dark a,.cband a{color:var(--amber)}
 .sec.dark .btn,.cband .btn{color:inherit}
 .formcard a{color:var(--blue)}
+
+.ftr .brand{background:#fff;padding:10px 14px;border-radius:12px;display:inline-flex}

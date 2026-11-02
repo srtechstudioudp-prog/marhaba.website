@@ -88,9 +88,9 @@ function header(cur) {
   };
   const link = (p, label) => (byPath[p] ? `<a href="${p}"${cur === p ? ' aria-current="page"' : ''}>${label}</a>` : '');
   return `<a class="skip" href="#main">Skip to content</a>
-<div class="topbar"><div class="wrap"><div class="tb-l"><span class="i">${icon('pin')}${esc(CFG.addr)}</span></div><div class="tb-r"><span class="i">${icon('clock')}${esc(CFG.hours)}</span><a class="i" href="tel:${CFG.tel}">${icon('phone')}${CFG.phone}</a><a class="i" href="mailto:${CFG.email}">${icon('mail')}${CFG.email}</a></div></div></div>
+<div class="topbar"><div class="wrap"><div class="tb-l"><span class="i">${icon('pin')}${esc(CFG.addr)}</span></div><div class="tb-r"><a class="i" href="tel:${CFG.tel}">${icon('phone')}${CFG.phone}</a><a class="i" href="mailto:${CFG.email}">${icon('mail')}${CFG.email}</a></div></div></div>
 <header class="hdr"><div class="wrap">
-<a class="brand" href="/" aria-label="${CFG.brand} home"><img src="/assets/img/favicon-96.png" width="46" height="46" alt=""><span><b>Marhaba</b><small>Heavy Equipment</small></span></a>
+<a class="brand" href="/" aria-label="${CFG.brand} home"><img src="/assets/img/logo.png" width="290" height="52" alt="Marhaba Heavy Equipment logo"></a>
 <button class="burger" aria-label="Menu" aria-expanded="false" aria-controls="nav">${icon('menu')}</button>
 <nav class="nav" id="nav" aria-label="Main">
 ${link('/', 'Home')}
@@ -104,7 +104,7 @@ function footer() {
   const list = (c) => `<div><h4>${c.name}</h4>${kids(c.path).slice(0, 9).map((k) => `<a href="${k.path}">${esc(k.crumb || k.h1)}</a>`).join('')}</div>`;
   const comp = ['/about/', '/export/', '/industries/', '/guides/', '/contact/'].filter((p) => byPath[p]).map((p) => `<a href="${p}">${esc(byPath[p].crumb || byPath[p].h1)}</a>`).join('');
   return `<footer class="ftr"><div class="wrap"><div class="top">
-<div><a class="brand" href="/"><img src="/assets/img/favicon-96.png" width="46" height="46" alt=""><span><b>Marhaba</b><small>Heavy Equipment</small></span></a>
+<div><a class="brand" href="/"><img src="/assets/img/logo.png" width="290" height="52" alt="Marhaba Heavy Equipment logo"></a>
 <p>${esc(CFG.legal)}. Cranes, heavy equipment and spare parts supplied from Sharjah, UAE.</p>
 <a href="tel:${CFG.tel}">${CFG.phone}</a><a href="tel:+${CFG.wa}">${CFG.mobile}</a><a href="mailto:${CFG.email}">${CFG.email}</a><p style="margin-top:10px">${esc(CFG.addr)}<br>${esc(CFG.hours)}</p></div>
 ${CATS.map(list).join('')}
