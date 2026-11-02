@@ -49,7 +49,8 @@ li{margin-bottom:.4em}
 .topbar .tb-r{display:flex;gap:22px;flex-wrap:wrap}
 .topbar span.i{display:inline-flex;gap:7px;align-items:center}
 .topbar svg{width:14px;height:14px;color:var(--amber)}
-.hdr{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.94);backdrop-filter:saturate(1.4) blur(10px);border-bottom:1px solid var(--line)}
+.hdr{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid var(--line)}
+html,body{overflow-x:clip}
 .hdr .wrap{display:flex;align-items:center;justify-content:space-between;height:74px;gap:18px}
 .brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--navy)}
 .brand img{height:52px;width:auto;max-width:62vw}
@@ -58,6 +59,7 @@ li{margin-bottom:.4em}
 .nav{display:flex;align-items:center;gap:4px}
 .nav>a,.nav>.dd>button{font:600 .95rem/1 var(--font-b);color:var(--ink);text-decoration:none;padding:12px 13px;border-radius:8px;background:none;border:0;cursor:pointer;display:inline-flex;gap:6px;align-items:center}
 .nav>a:hover,.nav>.dd>button:hover,.nav a[aria-current]{color:var(--blue);background:var(--surface)}
+.nav svg{width:16px;height:16px;flex:none}
 .dd{position:relative}
 .dd-menu{position:absolute;top:100%;left:-120px;width:min(720px,92vw);background:#fff;border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px;display:none;grid-template-columns:repeat(3,1fr);gap:18px}
 .dd:hover .dd-menu,.dd:focus-within .dd-menu,.dd.open .dd-menu{display:grid}
@@ -225,6 +227,7 @@ tbody th{font-weight:700;color:var(--ink)}
   .facts .wrap{grid-template-columns:repeat(2,1fr)}.facts .f:nth-child(3){border-left:0}
   .cband .wrap{grid-template-columns:1fr;gap:36px}
   .ftr .top{grid-template-columns:1fr 1fr}
+  .topbar{display:none}
   .burger{display:grid}
   .nav{position:fixed;inset:74px 0 0 0;background:#fff;flex-direction:column;align-items:stretch;padding:18px 22px;gap:2px;overflow:auto;transform:translateX(100%);transition:transform .25s;visibility:hidden}
   .nav.open{transform:none;visibility:visible}
