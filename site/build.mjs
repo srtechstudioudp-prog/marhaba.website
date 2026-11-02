@@ -41,12 +41,28 @@ for (const f of fs.readdirSync(path.join(ROOT, 'site/content')).filter((f) => f.
   const mod = await import(pathToFileURL(path.join(ROOT, 'site/content', f)).href);
   pages.push(...mod.default);
 }
+const products = JSON.parse(fs.readFileSync(path.join(ROOT, 'site/data/products.json'), 'utf8'));
+const guideFor = (x) => {
+  const t = (x.type || '').toLowerCase(), n = x.name.toLowerCase();
+  if (x.cat === 'cranes-2') return t.includes('all terrain') ? '/all-terrain-cranes/' : t.includes('rough') ? '/rough-terrain-cranes/' : t.includes('truck') ? '/truck-mounted-cranes/' : t.includes('crawler') ? '/crawler-cranes/' : '/cranes/';
+  if (x.cat === 'heavy-equipment-3') return t.includes('dump') ? '/rigid-dump-trucks/' : t.includes('dozer') ? '/bulldozers/' : t.includes('excavator') ? '/excavators/' : '/heavy-equipment/';
+  if (x.cat === 'eot-crane-components-5') return '/eot-crane-components/';
+  if (x.cat === 'mining-spares-1') return /filter|pump|nozzle|liner|gasket|element|injection/i.test(n) ? '/engine-parts/' : '/mining-spares/';
+  return '/locomotive-spares/';
+};
+for (const x of products) {
+  const rich = (x.desc || '').length >= 60 || ['cranes-2', 'heavy-equipment-3', 'eot-crane-components-5'].includes(x.cat);
+  const t1 = `${x.name} | ${CFG.brand}`;
+  let meta = `${x.name}${x.brand && !x.name.toLowerCase().includes(x.brand.toLowerCase()) ? ' (' + x.brand + ')' : ''}${x.capacity ? ', ' + x.capacity : ''}${x.type ? ', ' + x.type.toLowerCase() : ''}. See details and request a quote from ${CFG.brand} in Sharjah, UAE.`;
+  if (meta.length > 160) meta = meta.slice(0, 157).replace(/[ ,.]+\S*$/, '') + '...';
+  pages.push({ path: `/products/${x.slug}/`, type: 'product', parent: x.page, crumb: x.name, h1: x.name, title: t1.length <= 60 ? t1 : x.name.slice(0, 60), meta, product: x, noindex: !rich, date: CFG.date });
+}
 const byPath = Object.fromEntries(pages.map((p) => [p.path, p]));
-const kids = (parent) => pages.filter((p) => p.parent === parent);
+const kids = (parent) => pages.filter((p) => p.parent === parent && p.type !== 'product');
 
 // ---------- assets ----------
 const hashOf = (f) => crypto.createHash('md5').update(fs.readFileSync(path.join(ROOT, 'site/assets', f))).digest('hex').slice(0, 8);
-const V = { css: hashOf('css/main.css'), js: hashOf('js/main.js') };
+const V = { css: hashOf('css/main.css'), pcss: hashOf('css/products.css'), js: hashOf('js/main.js') };
 function copyDir(src, dst) {
   fs.mkdirSync(dst, { recursive: true });
   for (const e of fs.readdirSync(src, { withFileTypes: true })) {
@@ -114,21 +130,21 @@ ${CATS.map(list).join('')}
 }
 
 const SELECT = ['Cranes', 'Excavators', 'Bulldozers / dozers', 'Wheel loaders', 'Other heavy equipment', 'Spare parts / components', 'Other'];
-function enquiry(preset = '', title = 'Request a quote', sub = 'Tell us what you need. We reply with an offer, pictures and inspection details where available.') {
+function enquiry(preset = '', title = 'Request a quote', sub = 'Tell us what you need. We reply with an offer, pictures and inspection details where available.', msg = '') {
   return `<form class="enq formcard" data-preset="${esc(preset)}" novalidate><h3>${esc(title)}</h3><p>${esc(sub)}</p>
 <div class="row2"><div class="fld"><label for="f-name">Your name *</label><input id="f-name" name="name" autocomplete="name" required></div><div class="fld"><label for="f-phone">Phone / WhatsApp</label><input id="f-phone" name="phone" type="tel" autocomplete="tel"></div></div>
 <div class="row2"><div class="fld"><label for="f-company">Company</label><input id="f-company" name="company" autocomplete="organization"></div><div class="fld"><label for="f-cat">Looking for</label><select id="f-cat" name="category">${SELECT.map((o) => `<option>${o}</option>`).join('')}</select></div></div>
 <div class="row2"><div class="fld"><label for="f-model">Brand, model or part number</label><input id="f-model" name="model"></div><div class="fld"><label for="f-country">Delivery country / port</label><input id="f-country" name="country"></div></div>
-<div class="fld"><label for="f-msg">Details *</label><textarea id="f-msg" name="message" rows="4" placeholder="Capacity, quantity, working hours, year range, application..." required></textarea></div>
+<div class="fld"><label for="f-msg">Details *</label><textarea id="f-msg" name="message" rows="4" placeholder="Capacity, quantity, working hours, year range, application..." required>${esc(msg)}</textarea></div>
 <div class="fbtns"><button type="button" class="btn btn-wa" data-send="wa">${icon('wa')} Send on WhatsApp</button><button type="button" class="btn btn-dark" data-send="mail">${icon('mail')} Send by email</button></div>
 <p class="fnote">Pressing a button opens WhatsApp or your email app with your message ready to send. Nothing is stored on this website.</p></form>`;
 }
 
-function ctaBand(preset, h = 'Tell us what you need') {
+function ctaBand(preset, h = 'Tell us what you need', sub2 = '', msg = '') {
   return `<section class="cband on-dark" id="quote"><div class="wrap"><div><span class="eyebrow">Get an offer</span><h2>${esc(h)}</h2>
-<p>Send the machine type, capacity or part number and your delivery port. We reply with an offer, pictures and inspection details where available.</p>
+<p>${esc(sub2) || 'Send the machine type, capacity or part number and your delivery port. We reply with an offer, pictures and inspection details where available.'}</p>
 <ul><li>${icon('check')}Offer for stock on hand or machines at other locations</li><li>${icon('check')}Pictures and inspection reports reviewed before you order</li><li>${icon('check')}Sea or air freight arranged to your destination port</li></ul>
-<p>Prefer to talk? Call <a href="tel:${CFG.tel}" style="color:var(--amber)">${CFG.phone}</a> or WhatsApp <a href="https://wa.me/${CFG.wa}" style="color:var(--amber)">${CFG.mobile}</a>.</p></div>${enquiry(preset)}</div></section>`;
+<p>Prefer to talk? Call <a href="tel:${CFG.tel}" style="color:var(--amber)">${CFG.phone}</a> or WhatsApp <a href="https://wa.me/${CFG.wa}" style="color:var(--amber)">${CFG.mobile}</a>.</p></div>${enquiry(preset, 'Request a quote', undefined, msg)}</div></section>`;
 }
 
 const faqHtml = (faq, h = 'Frequently asked questions') =>
@@ -154,6 +170,40 @@ function sectionHtml(s) {
 }
 const slug = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 
+// ---------- products ----------
+const prodImg = (x, thumb = false) => `/assets/img/p/${x.slug}${thumb ? '-t' : ''}.webp`;
+const prodAlt = (x) => `${x.name}${x.type && !x.name.toLowerCase().includes(x.type.toLowerCase()) ? ', ' + x.type.toLowerCase() : ''}`;
+function productCard(x) {
+  const meta = [x.brand && !x.name.toLowerCase().includes(x.brand.toLowerCase()) ? x.brand : '', x.capacity, x.partno ? 'Part ' + x.partno : ''].filter(Boolean);
+  const s = [x.name, x.brand, x.model, x.type, x.partno, x.capacity].join(' ').toLowerCase();
+  return `<a class="pcard" href="/products/${x.slug}/" data-s="${esc(s)}"><div class="pimg"><img src="${prodImg(x, true)}" width="${x.tw}" height="${x.th}" loading="lazy" decoding="async" alt="${esc(prodAlt(x))}"></div><div class="pbody"><h3>${esc(x.name)}</h3>${meta.length ? `<p class="pmeta">${meta.map(esc).join(' &middot; ')}</p>` : ''}<span class="go">View details ${icon('arrow')}</span></div></a>`;
+}
+function productGrid(list, h, intro) {
+  return `<h2 id="products">${esc(h)}</h2>${intro ? `<p>${md(intro)}</p>` : ''}${list.length > 12 ? `<div class="pfilter"><label class="sr" for="pf">Filter products</label><input id="pf" type="search" placeholder="Filter ${list.length} products by name, brand or part number" data-filter=".pgrid"></div>` : ''}<div class="pgrid">${list.map(productCard).join('')}</div><p class="note pnone" hidden>No product matches that search. Send us your requirement and we will check availability.</p>`;
+}
+function renderProduct(p) {
+  const x = p.product;
+  const trail = breadcrumbs(p);
+  const rows = [['Brand', x.brand], ['Model', x.model], ['Type', x.type], ['Part number', x.partno], [x.cat === 'locomotive-spares-4' ? 'Rating' : 'Capacity', x.capacity], ['Year', x.year], ['Condition', x.condition], ...Object.entries(x.extra || {})].filter((r) => r[1]);
+  const q = `Hello, I would like a quote for: ${x.name}${x.partno ? ' (part ' + x.partno + ')' : x.model ? ' (' + x.model + ')' : ''}. Link: ${url(p.path)}`;
+  const gp = guideFor(x);
+  const guide = byPath[gp];
+  const same = products.filter((o) => o.cat === x.cat && o.slug !== x.slug);
+  const i0 = products.indexOf(x);
+  const rel = [...same.filter((o) => products.indexOf(o) > i0), ...same.filter((o) => products.indexOf(o) < i0)].slice(0, 4);
+  const inner = `<section class="phead on-dark"><div class="wrap"><div class="crumbs">${crumbsHtml(trail)}</div></div></section>
+<section class="sec" style="padding-top:44px"><div class="wrap pdetail"><div class="pfig"><img src="${prodImg(x)}" width="${x.w}" height="${x.h}" alt="${esc(prodAlt(x))}" fetchpriority="high"></div>
+<div class="pinfo"><span class="eyebrow">${esc(byPath[x.page].crumb || '')}</span><h1>${esc(x.name)}</h1>
+${x.desc ? `<p class="plead">${esc(x.desc)}</p>` : x.type ? `<p class="plead">${esc(x.type)}${x.brand ? ' from ' + esc(x.brand) : ''}, available to enquire through ${CFG.brand}.</p>` : ''}
+${rows.length ? `<div class="tbl"><table><caption class="sr">Specifications</caption><tbody>${rows.map((r) => `<tr><th scope="row">${esc(r[0])}</th><td>${esc(r[1])}</td></tr>`).join('')}</tbody></table></div>` : ''}
+<div class="fbtns"><a class="btn btn-wa" href="https://wa.me/${CFG.wa}?text=${encodeURIComponent(q)}" target="_blank" rel="noopener">${icon('wa')} Quote on WhatsApp</a><a class="btn btn-dark" href="mailto:${CFG.email}?subject=${encodeURIComponent('Enquiry: ' + x.name)}&body=${encodeURIComponent(q)}">${icon('mail')} Email us</a><a class="btn btn-line" href="tel:${CFG.tel}">${icon('phone')} ${CFG.phone}</a></div>
+<p class="note">Prices are not shown online. Availability, condition, delivery time and freight are confirmed in your offer. Images are for illustration and brand names are used for reference.</p>
+${guide ? `<p class="plink">${icon('arrow')} Learn more: <a href="${gp}">${esc(guide.h1)}</a> and the <a href="${x.page}">${esc(byPath[x.page].crumb)}</a> category.</p>` : ''}</div></div></section>
+${rel.length ? `<section class="sec alt"><div class="wrap"><h2 style="margin-bottom:24px">More in ${esc(byPath[x.page].crumb)}</h2><div class="pgrid">${rel.map(productCard).join('')}</div></div></section>` : ''}
+${ctaBand('', 'Request this item', 'Tell us the quantity, delivery port and any specification you need for ' + x.name + '.', `Enquiry about: ${x.name}${x.partno ? ' (part ' + x.partno + ')' : ''}. Quantity and delivery port: `)}`;
+  return doc(p, inner, trail);
+}
+
 // ---------- JSON-LD ----------
 const ORG_ID = url('/#organization'), SITE_ID = url('/#website');
 function orgNode() {
@@ -172,9 +222,13 @@ function schema(p, trail) {
   const g = [orgNode()];
   if (p.path === '/') g.push({ '@type': 'WebSite', '@id': SITE_ID, url: url('/'), name: CFG.brand, alternateName: CFG.alt, inLanguage: 'en', publisher: { '@id': ORG_ID } });
   const pageId = url(p.path) + '#webpage';
-  const wpType = { home: 'WebPage', about: 'AboutPage', contact: 'ContactPage', hub: 'CollectionPage' }[p.type] || 'WebPage';
+  const wpType = { home: 'WebPage', about: 'AboutPage', contact: 'ContactPage', hub: 'CollectionPage', product: 'ItemPage' }[p.type] || 'WebPage';
   const wp = { '@type': wpType, '@id': pageId, url: url(p.path), name: p.title, description: p.meta, inLanguage: 'en', isPartOf: { '@id': SITE_ID }, about: { '@id': ORG_ID }, breadcrumb: { '@id': url(p.path) + '#breadcrumb' } };
-  if (p.img) {
+  if (p.product) {
+    const iu = url(prodImg(p.product));
+    wp.primaryImageOfPage = { '@id': url(p.path) + '#image' };
+    g.push({ '@type': 'ImageObject', '@id': url(p.path) + '#image', contentUrl: iu, url: iu, width: p.product.w, height: p.product.h, name: prodAlt(p.product), caption: prodAlt(p.product) });
+  } else if (p.img) {
     wp.primaryImageOfPage = { '@id': url(p.path) + '#image' };
     g.push({ '@type': 'ImageObject', '@id': url(p.path) + '#image', contentUrl: url(IMG(p.img)), url: url(IMG(p.img)), width: 1366, height: 650, name: p.imgAlt, caption: p.imgAlt });
   }
@@ -196,7 +250,7 @@ function schema(p, trail) {
 
 // ---------- document shell ----------
 function doc(p, bodyInner, trail) {
-  const img = p.img ? url(IMG(p.img)) : url('/assets/img/favicon-512.png');
+  const img = p.product ? url(prodImg(p.product)) : p.img ? url(IMG(p.img)) : url('/assets/img/favicon-512.png');
   const ogType = p.type === 'guide' ? 'article' : 'website';
   return `<!doctype html>
 <html lang="en"><head>
@@ -204,14 +258,14 @@ function doc(p, bodyInner, trail) {
 <title>${esc(p.title)}</title>
 <meta name="description" content="${esc(p.meta)}">
 <link rel="canonical" href="${url(p.path)}">
-<meta name="robots" content="index,follow,max-image-preview:large">
+<meta name="robots" content="${p.noindex ? 'noindex,follow' : 'index,follow,max-image-preview:large'}">
 <meta name="theme-color" content="#0a1b33">
 <meta property="og:site_name" content="${CFG.brand}"><meta property="og:type" content="${ogType}"><meta property="og:title" content="${esc(p.title)}"><meta property="og:description" content="${esc(p.meta)}"><meta property="og:url" content="${url(p.path)}"><meta property="og:image" content="${img}"><meta property="og:locale" content="en_AE">
 <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${esc(p.title)}"><meta name="twitter:description" content="${esc(p.meta)}"><meta name="twitter:image" content="${img}">
 <link rel="icon" href="/favicon.ico" sizes="48x48"><link rel="icon" type="image/png" sizes="96x96" href="/assets/img/favicon-96.png"><link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png"><link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Inter:wght@400;500;600;700&display=swap">
-<link rel="stylesheet" href="/assets/css/main.css?v=${V.css}">
+<link rel="stylesheet" href="/assets/css/main.css?v=${V.css}"><link rel="stylesheet" href="/assets/css/products.css?v=${V.pcss}">
 ${schema(p, trail)}
 </head><body>
 ${header(p.path)}
@@ -240,10 +294,16 @@ function renderStandard(p) {
   if (p.features) body += `<ul class="feat">${p.features.map((f) => `<li>${icon('check')}<span>${md(f)}</span></li>`).join('')}</ul>`;
   if (p.story) body += `<p class="story">${md(p.story)}</p>`;
   const children = p.type === 'hub' ? kids(p.path) : [];
+  const firstSentence = (t) => { const m = (t || '').match(/^.{40,170}?[.!?](?=\s|$)/); return m ? m[0] : (t || '').slice(0, 150); };
+  if (p.productCat) {
+    const list = products.filter((x) => x.cat === p.productCat);
+    body += productGrid(list, p.productsH || 'Products available to enquire', p.productsP);
+  }
   if (children.length) {
-    body += `<h2 id="types">${esc(p.childrenH || 'Types we supply')}</h2><div class="grid g2" style="margin-bottom:2em">${children.map((k) => `<a class="card" href="${k.path}"><div class="ico">${icon(k.icon || 'tool')}</div><h3>${esc(k.h1.replace(/ in the UAE.*| UAE$/i, ''))}</h3><p>${esc(k.card || k.meta)}</p><span class="go">Explore ${icon('arrow')}</span></a>`).join('')}</div>`;
+    body += `<h2 id="types">${esc(p.childrenH || 'Types we supply')}</h2><div class="grid g2" style="margin-bottom:2em">${children.map((k) => `<a class="card" href="${k.path}"><div class="ico">${icon(k.icon || 'tool')}</div><h3>${esc(k.h1.replace(/ in the UAE.*| UAE$/i, ''))}</h3><p>${esc(k.card || firstSentence(k.answer))}</p><span class="go">Explore ${icon('arrow')}</span></a>`).join('')}</div>`;
     toc.unshift(['types', p.childrenH || 'Types we supply']);
   }
+  if (p.productCat) toc.unshift(['products', p.productsH || 'Products available to enquire']);
   for (const s of secs) body += sectionHtml(s);
   if (p.faq) body += faqHtml(p.faq);
   // related
@@ -275,6 +335,7 @@ function renderHome(p) {
   const inner = `${hero(p, trail, { home: true })}
 <div class="facts"><div class="wrap">${H.facts.map((f) => `<div class="f">${icon(f.icon)}<div><b>${esc(f.b)}</b><span>${esc(f.s)}</span></div></div>`).join('')}</div></div>
 <section class="sec"><div class="wrap"><div class="sec-h c"><span class="eyebrow">What we supply</span><h2>${esc(H.catsH)}</h2><p>${md(H.catsP)}</p></div><div class="grid g3">${catCards}</div></div></section>
+${H.featured ? `<section class="sec"><div class="wrap"><div class="sec-h c"><span class="eyebrow">Featured equipment</span><h2>${esc(H.featuredH)}</h2><p>${md(H.featuredP)}</p></div><div class="pgrid">${H.featured.map((sl) => products.find((x) => x.slug === sl)).filter(Boolean).map(productCard).join('')}</div><p style="text-align:center;margin-top:28px"><a class="btn btn-line" href="/cranes/">All cranes</a> <a class="btn btn-line" href="/heavy-equipment/">All heavy equipment</a> <a class="btn btn-line" href="/eot-crane-components/">EOT crane components</a></p></div></section>` : ''}
 <section class="sec alt"><div class="wrap"><div class="sec-h c"><span class="eyebrow">Equipment range</span><h2>${esc(H.typesH)}</h2><p>${md(H.typesP)}</p></div><div class="grid g4">${types}</div></div></section>
 <section class="sec dark on-dark"><div class="wrap"><div class="sec-h c"><span class="eyebrow">How an order works</span><h2>${esc(H.stepsH)}</h2><p>${md(H.stepsP)}</p></div><div class="steps">${H.steps.map((s) => `<div class="step"><h3>${esc(s[0])}</h3><p>${md(s[1])}</p></div>`).join('')}</div></div></section>
 <section class="sec"><div class="wrap layout"><article class="prose">${(p.sections || []).map((s) => sectionHtml({ ...s, id: slug(s.h || '') })).join('')}
@@ -298,13 +359,14 @@ copyDir(path.join(ROOT, 'site/assets/js'), path.join(OUT, 'assets/js'));
 const report = [];
 const allHrefs = new Map();
 for (const p of pages) {
-  const html = p.type === 'home' ? renderHome(p) : p.type === 'contact' ? renderContact(p) : renderStandard(p);
+  const html = p.type === 'home' ? renderHome(p) : p.type === 'contact' ? renderContact(p) : p.type === 'product' ? renderProduct(p) : renderStandard(p);
   write(p.path === '/' ? 'index.html' : path.join(p.path, 'index.html'), html);
   const main = html.split('<main id="main">')[1].split('</main>')[0];
   const words = strip(main).split(' ').length;
   const links = [...main.matchAll(/href="(\/[^"#]*)[^"]*"/g)].map((m) => m[1]).filter((h) => !h.startsWith('/assets'));
   allHrefs.set(p.path, links);
   const warn = [];
+  if (p.type === 'product') { report.push({ path: p.path, words, faq: 0, internal: 0, tables: 0, warn: [], product: true }); continue; }
   if (p.title.length > 60) warn.push(`title ${p.title.length}>60`);
   if (p.meta.length < 120 || p.meta.length > 160) warn.push(`meta ${p.meta.length}`);
   if (!p.faq || p.faq.length < 10) warn.push(`faq ${p.faq ? p.faq.length : 0}<10`);
@@ -322,11 +384,11 @@ for (const p of pages) {
 const broken = [];
 for (const [from, links] of allHrefs) for (const l of links) if (!byPath[l] && !['/favicon.ico'].includes(l)) broken.push(`${from} -> ${l}`);
 
-write('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${pages.map((p) => `<url><loc>${url(p.path)}</loc><lastmod>${p.date || CFG.date}</lastmod></url>`).join('\n')}\n</urlset>\n`);
+write('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${pages.filter((p) => !p.noindex).map((p) => `<url><loc>${url(p.path)}</loc><lastmod>${p.date || CFG.date}</lastmod></url>`).join('\n')}\n</urlset>\n`);
 write('robots.txt', `User-agent: *\nAllow: /\n\nSitemap: ${url('/sitemap.xml')}\n`);
 write('404.html', `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Page not found | ${CFG.brand}</title><meta name="robots" content="noindex"><link rel="icon" href="/favicon.ico" sizes="48x48"><link rel="stylesheet" href="/assets/css/main.css?v=${V.css}"></head><body>${header('')}<main id="main"><section class="sec"><div class="wrap" style="text-align:center;max-width:680px"><span class="eyebrow">Error 404</span><h1>Page not found</h1><p>The page you asked for has moved or does not exist. Browse our equipment or contact the team.</p><p><a class="btn btn-primary" href="/">Go to home page</a> <a class="btn btn-line" href="/contact/">Contact us</a></p></div></section></main>${footer()}<script src="/assets/js/main.js?v=${V.js}" defer></script></body></html>`);
 
 console.log('\nPAGE'.padEnd(34), 'words faq links tbl  warnings');
-for (const r of report) console.log(r.path.padEnd(33), String(r.words).padStart(5), String(r.faq).padStart(3), String(r.internal).padStart(5), String(r.tables).padStart(3), ' ', r.warn.join('; '));
-console.log(`\n${pages.length} pages built.`);
+for (const r of report.filter((r) => !r.product)) console.log(r.path.padEnd(33), String(r.words).padStart(5), String(r.faq).padStart(3), String(r.internal).padStart(5), String(r.tables).padStart(3), ' ', r.warn.join('; '));
+console.log(`\n${pages.length} pages built (${report.filter((r) => r.product).length} product pages, ${pages.filter((p) => p.noindex).length} noindex).`);
 if (broken.length) { console.log('\nBROKEN INTERNAL LINKS:\n' + broken.join('\n')); process.exitCode = 1; }

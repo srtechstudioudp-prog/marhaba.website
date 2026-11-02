@@ -32,7 +32,7 @@ export default [
     ],
   },
   {
-    path: '/cranes/', type: 'hub', parent: '/products/', crumb: 'Cranes', h1: 'Cranes supplier in the UAE',
+    path: '/cranes/', type: 'hub', parent: '/products/', crumb: 'Cranes', productCat: 'cranes-2', productsH: 'Cranes available to enquire', productsP: 'Models from the client range, with images and the details listed for each. Open a crane to see its specification and request a quote.', h1: 'Cranes supplier in the UAE',
     title: 'Cranes Supplier UAE: All Terrain, Crawler, Tower',
     meta: 'Marhaba Heavy Equipment supplies all terrain, truck mounted, crawler and tower cranes from Sharjah, UAE. Compare crane types and request an offer.',
     answer: 'Marhaba Heavy Equipment supplies all terrain, truck mounted, crawler and tower cranes from Sharjah, UAE, covering lifting capacities that our listings put between 20 and 1,600 tons. Compare crane types below, then send the capacity, reach and site details for an offer with pictures and inspection reports.',
@@ -65,7 +65,7 @@ export default [
     ],
   },
   {
-    path: '/heavy-equipment/', type: 'hub', parent: '/products/', crumb: 'Heavy Equipment', h1: 'Heavy equipment supplier in the UAE',
+    path: '/heavy-equipment/', type: 'hub', parent: '/products/', crumb: 'Heavy Equipment', productCat: 'heavy-equipment-3', productsH: 'Heavy equipment available to enquire', productsP: 'Rigid dump trucks, a crawler dozer and excavators from the BEML range, with the details listed for each. Open a machine to see its specification and request a quote.', h1: 'Heavy equipment supplier in the UAE',
     title: 'Heavy Equipment Supplier UAE: Excavators, Dozers, Loaders',
     meta: 'Marhaba Heavy Equipment supplies excavators, bulldozers, wheel loaders, graders and dump trucks from Sharjah, UAE. Compare machines and request an offer.',
     answer: 'Marhaba Heavy Equipment supplies earth-moving and mining machines from Sharjah, UAE: excavators, dozers, wheel loaders, motor graders, rigid dump trucks, pipelayers, backhoe loaders and drilling machines. Compare the machine types below and send your job details for an offer with pictures and inspection reports.',

@@ -15,6 +15,8 @@ export default [
         { icon: 'engine', b: 'Spare parts', s: 'Engine, hydraulic, transmission, undercarriage' },
         { icon: 'ship', b: 'Sea and air freight', s: 'Arranged to your destination port' },
       ],
+      featured: ['all-terrain-mobile-crane', 'tadano-80tons-atf80g', 'lattice-boom-crawler-crane', 'tadano-gr500ex', '2026-60ton-beml-bh60', '2026-beml-bd355', '2026-150ton-beml-bh150e', 'truck-mounted-crane'],
+      featuredH: 'Machines you can enquire about today', featuredP: 'A selection from our range of cranes and heavy equipment. Open any item to see its details and request a quote, or [browse the full list](/products/).',
       catsH: 'Cranes, heavy equipment and spare parts', catsP: 'Three product lines under one roof in Sharjah. Pick a category, or [send us your requirement](/contact/) if you are not sure where it fits.',
       cats: [
         { href: '/cranes/', img: 'all-terrain-crane', name: 'Cranes', text: 'All terrain, truck mounted, crawler and tower cranes for lifting jobs of every size.', more: 'View cranes', alt: 'Large yellow all terrain crane with its telescopic boom retracted' },

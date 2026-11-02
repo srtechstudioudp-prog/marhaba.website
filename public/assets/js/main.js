@@ -51,4 +51,18 @@
     var pre = form.dataset.preset;
     if (cat && pre) { for (var i = 0; i < cat.options.length; i++) { if (cat.options[i].value === pre) cat.selectedIndex = i; } }
   });
+  document.querySelectorAll('input[data-filter]').forEach(function (inp) {
+    var grid = document.querySelector(inp.dataset.filter);
+    if (!grid) return;
+    var none = grid.parentNode.querySelector('.pnone');
+    inp.addEventListener('input', function () {
+      var q = inp.value.trim().toLowerCase(), shown = 0;
+      grid.querySelectorAll('.pcard').forEach(function (c) {
+        var ok = !q || (c.dataset.s || '').indexOf(q) > -1;
+        c.hidden = !ok;
+        if (ok) shown++;
+      });
+      if (none) none.hidden = shown > 0;
+    });
+  });
 })();

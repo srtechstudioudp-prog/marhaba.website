@@ -39,7 +39,7 @@ export default [
     related: ['/eot-crane-components/', '/all-terrain-cranes/', '/guides/choose-crane-capacity/', '/cranes/', '/products/', '/export/', '/contact/'],
   },
   {
-    path: '/eot-crane-components/', type: 'item', parent: '/spare-parts/', crumb: 'EOT Crane Components', h1: 'EOT crane components and spare parts',
+    path: '/eot-crane-components/', type: 'item', parent: '/spare-parts/', crumb: 'EOT Crane Components', productCat: 'eot-crane-components-5', productsH: 'EOT crane components available to enquire', productsP: 'Busbar systems, limit switches, joystick and master controllers, pendants, brakes and radio remote controls from Speed-O-Control. Filter by name or model, then open an item to request a quote.', h1: 'EOT crane components and spare parts',
     title: 'EOT Crane Components & Parts UAE | Marhaba',
     meta: 'Hoists, crane hooks, festoon and DSL systems, busbar, limit switches, overload limiters and radio remotes for EOT cranes, supplied from Sharjah, UAE.',
     answer: 'EOT crane components are the hoists, hooks, power feed systems, control gear, limit switches and safety devices that keep overhead cranes working. Marhaba Heavy Equipment supplies EOT and overhead crane components and spare parts from Sharjah, UAE. Send the crane make, model and part details for a quote.',

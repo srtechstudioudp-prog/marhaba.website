@@ -24,6 +24,16 @@
 | Replies in other languages | contact FAQ says write in English | Confirm |
 | Trade licence documents shared for due diligence | about FAQ | Confirm they will share |
 
+## Product catalogue (133 items imported from the client's Odoo shop, 2026-11-02)
+Source: the five Odoo categories (cranes 11, heavy equipment 6, mining spares 58, locomotive spares 30, EOT crane components 28). Rebuild with `_src/odoo/products.json` then `python -I tools/make_products.py`. Product pages live at `/products/<slug>/`.
+- **Condition and year:** the listing shows "New" and "2026" on most machines, while the Yellow Pages listing says used equipment too. Confirm what is actually in stock before launch. The site says "Availability and condition are confirmed in your offer".
+- **Machine images:** the crane and BEML photos look like generated or catalogue illustrations, not real stock. Replace with the client's own photos or confirm they may be used.
+- **Odd data left out on purpose:** BEML BE1000 shows capacity "1000 TON" and BD355 shows "355" (probably horsepower). Both capacities are hidden until confirmed. BH150E is listed with model BE150: confirm the correct name.
+- **Customers:** one Elixir listing named customers and railways. That sentence was removed (no customer names without permission).
+- **Prices:** none are shown (the Odoo prices were all 0.00).
+- **Indexing:** 56 spare-part pages with no description are set to noindex and left out of the sitemap, so thin pages do not hurt the site. Add a short description to a part in the data and it becomes indexable.
+- **Brand wording:** part images show Komatsu "Genuine Parts" boxes. The site text does not claim genuine parts or dealership.
+
 ## Images and brand
 - Hero and category photos are the 4 slider images from the old site. They show Komatsu, Liebherr and Cat machines (manufacturer marketing photos). **Replace with the client's own machine photos**, or confirm the rights to use these.
 - Logo: the header and footer use the client-supplied logo (1158x215 transparent PNG, saved as `_src/logo-client.png`, no "Hello !! World" tagline). The favicon is its circular emblem on a white square. A vector (SVG) logo would make it sharper on large screens.
