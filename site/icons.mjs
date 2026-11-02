@@ -29,6 +29,9 @@ const P = {
   people: '<circle cx="22" cy="20" r="8"/><circle cx="44" cy="24" r="6"/><path d="M6 54c0-12 8-18 16-18s16 6 16 18M40 38c10-2 18 4 18 16"/>',
 };
 const SMALL = {
+  facebook: '<path fill="currentColor" d="M14 8.500V6.800c0-.8.200-1.300 1.400-1.300H17V2.600C16.700 2.500 15.800 2.400 14.700 2.400 12.300 2.400 10.700 3.800 10.700 6.500v2H8v3.200h2.700V21.600H14v-9.900h2.700l.4-3.200H14z"/>',
+  linkedin: '<path fill="currentColor" d="M4.500 3.500a2 2 0 100 4 2 2 0 000-4zM3 9h3v12H3zM9 9h2.900v1.700h.1c.5-.9 1.700-1.900 3.500-1.900 3.700 0 4.500 2.400 4.500 5.600V21h-3v-5.900c0-1.400 0-3.200-2-3.200s-2.300 1.500-2.300 3.100V21H9z"/>',
+  instagram: '<rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4.200" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.300" cy="6.700" r="1.200" fill="currentColor"/>',
   check: '<path d="M4 12l5 5L20 6" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>',
   phone: '<path d="M5 3h4l2 5-2.5 1.5a11 11 0 006 6L16 13l5 2v4a2 2 0 01-2 2A16 16 0 013 5a2 2 0 012-2z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>',
   mail: '<rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M3 7l9 7 9-7" fill="none" stroke="currentColor" stroke-width="2"/>',

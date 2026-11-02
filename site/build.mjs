@@ -122,9 +122,10 @@ function footer() {
   return `<footer class="ftr"><div class="wrap"><div class="top">
 <div><a class="brand" href="/"><img src="/assets/img/logo.png" width="290" height="52" alt="Marhaba Heavy Equipment logo"></a>
 <p>${esc(CFG.legal)}. Cranes, heavy equipment and spare parts supplied from Sharjah, UAE.</p>
-<a href="tel:${CFG.tel}">${CFG.phone}</a><a href="tel:+${CFG.wa}">${CFG.mobile}</a><a href="mailto:${CFG.email}">${CFG.email}</a><p style="margin-top:10px">${esc(CFG.addr)}<br>${esc(CFG.hours)}</p></div>
+<a href="tel:${CFG.tel}">${CFG.phone}</a><a href="tel:+${CFG.wa}">${CFG.mobile}</a><a href="mailto:${CFG.email}">${CFG.email}</a><p style="margin-top:10px">${esc(CFG.addr)}<br>${esc(CFG.hours)}</p>
+<div class="soc" aria-label="Follow Marhaba Heavy Equipment">${CFG.social.map((u) => { const n = u.includes('facebook') ? 'facebook' : u.includes('linkedin') ? 'linkedin' : 'instagram'; return `<a href="${u}" rel="noopener me" target="_blank" aria-label="Marhaba Heavy Equipment on ${n[0].toUpperCase() + n.slice(1)}" title="${n[0].toUpperCase() + n.slice(1)}">${icon(n)}</a>`; }).join('')}<a href="https://wa.me/${CFG.wa}" rel="noopener" target="_blank" aria-label="Chat on WhatsApp" title="WhatsApp">${icon('wa')}</a></div></div>
 ${CATS.map(list).join('')}
-<div><h4>Company</h4>${comp}${CFG.social.map((s) => `<a href="${s}" rel="noopener" target="_blank">${s.includes('facebook') ? 'Facebook' : s.includes('linkedin') ? 'LinkedIn' : 'Instagram'}</a>`).join('')}</div>
+<div><h4>Company</h4>${comp}</div>
 </div><div class="bot"><span>&copy; ${new Date().getFullYear()} ${esc(CFG.legal)}. All rights reserved.</span><span>Brand names are used for reference only and belong to their owners.</span></div></div></footer>
 <a class="wafab" href="https://wa.me/${CFG.wa}" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">${icon('wa')}</a>`;
 }

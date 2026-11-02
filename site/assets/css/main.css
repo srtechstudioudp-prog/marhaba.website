@@ -211,7 +211,7 @@ tbody th{font-weight:700;color:var(--ink)}
 
 /* footer */
 .ftr{background:#071325;color:#9fb0c8;font-size:.93rem}
-.ftr .top{display:grid;grid-template-columns:1.5fr minmax(0,1fr) minmax(0,1fr) 1.2fr;gap:40px;padding:64px 0 40px}
+.ftr .top{display:grid;grid-template-columns:2fr repeat(4,minmax(0,1fr));gap:32px;padding:64px 0 40px}
 .ftr h4{font:700 .8rem/1 var(--font-b);letter-spacing:.16em;text-transform:uppercase;color:#fff;margin-bottom:16px}
 .ftr a{color:#9fb0c8;text-decoration:none;display:block;padding:4px 0}
 .ftr a:hover{color:var(--amber)}
@@ -258,3 +258,9 @@ tbody th{font-weight:700;color:var(--ink)}
 /* let grid and flex children shrink so long words and tables never push the page wider than the screen */
 .layout>*,.cband .wrap>*,.facts .wrap>*,.cinfo>*,.cinfo .c>*,.feat li>*,.row2>*,.g2>*,.g3>*,.g4>*,.steps>*,.ftr .top>*,.pdetail>*{min-width:0}
 h1,h2,h3,h4,p,li,td,th,a,b,span{overflow-wrap:break-word}
+
+.ftr .soc{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+.ftr .soc a{display:grid;place-items:center;width:42px;height:42px;margin:0;border-radius:50%;background:rgba(255,255,255,.08);color:#fff;transition:background .15s,color .15s,transform .15s}
+.ftr .soc a:hover{background:var(--amber);color:#1a1204;transform:translateY(-2px)}
+.ftr .soc svg{width:20px;height:20px}
+.ftr .brand img{max-width:100%}
