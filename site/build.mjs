@@ -20,8 +20,8 @@ export const CFG = {
   mobile: '+971 50 241 6414', wa: '971502416414',
   email: 'marhaba@marhabaheavyequip.com',
   hours: 'Sunday to Thursday, 8:00 to 18:00',
-  addr: 'Industrial Area 13, Sharjah, United Arab Emirates',
-  street: 'Industrial Area 13', city: 'Sharjah', country: 'AE',
+  addr: 'Office D20, Al Nayli Building, Bin Laden Street, Industrial Area 13, Sharjah, United Arab Emirates',
+  street: 'Office D20, Al Nayli Building, Bin Laden Street, Industrial Area 13', city: 'Sharjah', country: 'AE',
   social: [
     'https://www.facebook.com/share/17Uqh8qtCC/',
     'https://www.linkedin.com/company/marhaba-heavy-equip-tr-llc/',

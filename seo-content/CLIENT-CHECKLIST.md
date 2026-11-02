@@ -9,8 +9,10 @@
 ## Facts to confirm
 | Item | Where it appears | Issue |
 |---|---|---|
-| Exact address | footer, schema, contact | Old site "Yard A48", Odoo "Office D20, Al Nayeli Building". Site shows only "Industrial Area 13, Sharjah" until confirmed. Also need a map pin for schema geo |
-| Mobile and WhatsApp +971 50 241 6414 | all pages, WhatsApp button | Taken from the Odoo draft. Confirm it is monitored |
+| Address (RESOLVED) | footer, schema, contact | Office D20, Al Nayli Building, Bin Laden Street, Industrial Area 13, Sharjah, from their live Yellow Pages listing. Still need a map pin (geo) and the Google Business Profile link for schema |
+| Mobile and WhatsApp +971 50 241 6414 | all pages, WhatsApp button | Confirmed by the Yellow Pages listing |
+| Services not yet given a page | home, about | Forklifts, skid steer loaders, piling rigs, scrapers, pumps, generator parts, thrusters, crane and rigging services. Confirm what "crane and rigging services" means (hire? installation?) before we write it |
+| Used equipment details | /used-equipment/ and product pages | Listing says used cranes, EOT, JIB, dozers, excavators, dump trucks, mining trucks. Confirm whether any warranty is offered, and typical age and hours ranges |
 | Hours Sun to Thu 8:00 to 18:00 | header, contact | From the old site. Not in schema until confirmed |
 | Crane range 20 to 1,600 tons | cranes pages | From the old site. Confirm it is still accurate |
 | Years in business | not used | Old "over a decade" vs Odoo "20+ years". Give the real number |

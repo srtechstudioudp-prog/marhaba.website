@@ -19,11 +19,19 @@ BASIC mode: every keyword is **unvalidated**. No volume or difficulty claims. De
 | /export/ | Service | heavy equipment export UAE | export heavy machinery from Sharjah |
 | /industries/ | Info | construction and mining equipment supplier | oil and gas lifting equipment |
 | /guides/ and 2 guides | Informational | how to inspect used heavy equipment; how to choose a crane | crane load chart, used excavator checklist |
+| /eot-cranes/ | Spoke | EOT cranes UAE | overhead cranes UAE, gantry crane, jib crane, monorail crane, used EOT crane |
+| /rough-terrain-cranes/ | Spoke | rough terrain cranes UAE | four wheel crane, RT crane |
+| /eot-crane-components/ | Spoke | EOT crane components | overhead crane parts, festoon system, crane busbar, radio remote control crane, crane limit switch |
+| /engine-parts/ | Spoke | engine parts for heavy equipment | Cummins diesel engine parts, Komatsu injection pumps, generator parts |
+| /rigid-dump-trucks/ | Spoke | rigid dump trucks UAE | mining trucks, quarry trucks, rock body trucks, used dump trucks |
+| /mining-equipment/ | Spoke | mining equipment supplier UAE | mining drills, exploration drills, crushing plant, drill spare parts |
+| /used-equipment/ | Spoke | used heavy equipment UAE | used cranes UAE, used excavators Sharjah, used dozers |
 | /about/, /contact/ | Trust | brand + NAP | |
 
 ## Next batches (to reach 8 or more spokes per hub, no doorway pages)
-- Heavy equipment: motor-graders, rigid-dump-trucks, backhoe-loaders, pipelayers, drilling-machines.
-- Spare parts: engine-parts, transmission-parts, undercarriage-parts, mining-spares, locomotive-spares, eot-crane-components.
+- Heavy equipment: backhoe-loaders, skid-steer-loaders, forklifts, piling-rigs, scrapers, crushers and crushing plants (own page), motor-graders and pipelayers (old site only, confirm).
+- Cranes: gantry-cranes, jib-cranes and monorail-cranes (own pages if volume justifies), 50-ton truck mounted crane (check cannibalisation with /truck-mounted-cranes/).
+- Spare parts: transmission-parts, undercarriage-parts, Komatsu spare parts, Caterpillar spare parts, Cummins parts, crane tyres, mining drill spares, pumps and thrusters.
 - Guides: excavator size guide, how to identify a spare part, importing used machinery, crane vs excavator for lifting.
 - Phase 2: Arabic version with hreflang; privacy and terms pages.
 
